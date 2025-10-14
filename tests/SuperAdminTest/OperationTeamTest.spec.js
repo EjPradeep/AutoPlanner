@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../SuperAdminPages/LoginPage');
-const { RolesPage } = require('../../SuperAdminPages/RolesPage');
+const { OperationTeamPage } = require('../../SuperAdminPages/OperationTeamPage');
 
 let context;
 let page;
@@ -20,79 +20,137 @@ test.describe('TS01 - Login', async () => {
     })
 
     test('TC001 - Navigate to User Management', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.navigateToRoles();
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.navigateToOperationTeam();
 
     })
 
-    test('TC002 - add role details', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.clickAddRoleBtn();
-        await rolesPage.clickCloseIcon();
-        await rolesPage.clickAddRoleBtn();
-        await rolesPage.clickCancelBtn();
-        await rolesPage.clickAddRoleBtn();
-        await rolesPage.addRoleDetails("Arun_User", "test the function test the function test the function");
-        await rolesPage.searchTheModule('Tour');
-        await rolesPage.selectCheckbox('Tour');
-        await rolesPage.clickAddBtn();
-        await rolesPage.validateToastMessage('New Role Was Created Successfully');
+    test('TC002 - select Operation Admin Tab', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.navigateToOperationAdminTab();
+
     })
 
-    test('TC003 - edit role details', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.searchValue('Arun_User');
-        await rolesPage.clickUpdateBtn();
-        await rolesPage.editRoleDetails("test the function test the function test the functionality");
-        await rolesPage.searchTheModule('driver');
-        await rolesPage.selectCheckbox('Driver');
-        await rolesPage.clickAddBtn();
-        await rolesPage.validateToastMessage('Role updated successfully');
+    test('TC003 - add operation admin details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.clickAddOperationAdminBtn();
+        await operationTeamPage.clickCancelBtn();
+        await operationTeamPage.clickAddOperationAdminBtn();
+        await operationTeamPage.addOperationAdminDetails("aruuthu", "65336756", "arunmuu24@medyaan.com", "arunthu", "Arun@123", "Arun@123");
+        await operationTeamPage.passwordEyeIcon.click();
+        await operationTeamPage.passwordEyeIcon.click();
+        await operationTeamPage.confirmPasswordEyeIcon.click();
+        await operationTeamPage.confirmPasswordEyeIcon.click();
+        await operationTeamPage.clickSaveBtn();
+        await operationTeamPage.validateToastMessage('User onboarded successfully');
+        await page.waitForTimeout(2000);
     })
 
-    test('TC004 - view role access', async () => {
-        const rolesPage = new RolesPage(page);
-         await rolesPage.searchValue('Arun');
-        await rolesPage.viewRoleAccess();
-        await rolesPage.clickCloseIcon();
+    test('TC004 - edit operation admin details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.searchValue('');
+        await operationTeamPage.searchValue('Arun');
+        await operationTeamPage.clickUpdateBtn();
+        await operationTeamPage.editOperationAdminDetails("98765435", "arun.r@datayaan.com");
+        await operationTeamPage.clickSaveBtn();
+        await operationTeamPage.validateToastMessage('User profile updated successfully');
+        await page.waitForTimeout(2000);
     })
 
-    test('TC005 - delete role details', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.searchValue('Arun');
-        await rolesPage.clickDeleteBtn();
-        await rolesPage.clickConfirmationNo();
-        await rolesPage.clickDeleteBtn();
-        await rolesPage.clickConfirmationYes();
-        await rolesPage.validateToastMessage('Role deleted successfully');
+    test('TC005 - delete Operation admin details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.searchValue('');
+        await operationTeamPage.searchValue('Arun');
+        await operationTeamPage.clickDeleteBtn();
+        await operationTeamPage.clickConfirmationNo();
+        await operationTeamPage.clickDeleteBtn();
+        await operationTeamPage.clickConfirmationYes();
+        await operationTeamPage.validateToastMessage('User profile deleted successfully');
+        await page.waitForTimeout(2000);
     })
 
-    
-    test('TC006 - add role details with invalid data', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.clickAddRoleBtn();
-        await rolesPage.searchTheModule('Tour');
-        await rolesPage.selectCheckbox('Tour');
-        await rolesPage.clickAddBtn();
-        await rolesPage.validateFieldErrorMessage('Enter role name');
-        await rolesPage.clickCloseIcon();
+
+    test('TC006 - add operation admin details with invalid data', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.clickAddOperationAdminBtn();
+        await operationTeamPage.clickSaveBtn();
+        const getErrorMessage = await operationTeamPage.validateFieldErrorMessage();
+        console.log('Error messages are:' + getErrorMessage);
+        await operationTeamPage.clickCancelBtn();
+        await page.waitForTimeout(2000);
     })
-    
-    test('TC007 - add role details with invalid data', async () => {
-        const rolesPage = new RolesPage(page);
-        await rolesPage.clickAddRoleBtn();
-        await rolesPage.editRoleDetails('test the function');
-        await rolesPage.searchTheModule('Tour');
-        await rolesPage.selectCheckbox('Tour');
-        await rolesPage.clickAddBtn();
-        await rolesPage.validateFieldErrorMessage('Description have at least 10 words');
-        await rolesPage.clickCloseIcon();
+
+
+    test('TC007 - get admin roles count', async () => {
+        const operationTeamPage = new OperationTeamPage(page)
+        const count = await operationTeamPage.getRolesCount.textContent();
+        console.log('Total roles count is:' + count);
+        await page.waitForTimeout(2000);
     })
-    
-    test('TC008 - get roles count', async () => {
-        const rolesPage = new RolesPage(page);
-       const count= await rolesPage.getRolesCount.textContent();
-       console.log('Total roles count is:'+ count);
+
+
+    test('TC008 - select Operation User Tab', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.navigateToOperationUserTab();
+        await page.waitForTimeout(2000);
+
+    })
+
+    test('TC009 - add operation User details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.clickAddOperationUserBtn();
+        await operationTeamPage.clickCancelBtn();
+        await operationTeamPage.clickAddOperationUserBtn();
+        await operationTeamPage.addOperationUserDetails("ribha", "ARUN", "60004500", "ribha@medyaan.com", "ribhab", "Arun@123", "Arun@123");
+        await operationTeamPage.passwordEyeIcon.click();
+        await operationTeamPage.passwordEyeIcon.click();
+        await operationTeamPage.confirmPasswordEyeIcon.click();
+        await operationTeamPage.confirmPasswordEyeIcon.click();
+        await operationTeamPage.clickSaveBtn();
+        await operationTeamPage.validateToastMessage('User onboarded successfully');
+        await page.waitForTimeout(2000);
+    })
+
+    test('TC010 - edit operation user details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.searchValue('');
+        await operationTeamPage.searchValue('Ribha');
+        await operationTeamPage.clickUpdateBtn();
+        await operationTeamPage.editOperationUserDetails("ARUN", "65320083", "ribha.b@dataan.com");
+        await operationTeamPage.clickSaveBtn();
+        await operationTeamPage.validateToastMessage('User profile updated successfully');
+        await page.waitForTimeout(2000);
+    })
+
+    test('TC011 - delete Operation user details', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.searchValue('');
+        await operationTeamPage.searchValue('Ribha');
+        await operationTeamPage.clickDeleteBtn();
+        await operationTeamPage.clickConfirmationNo();
+        await operationTeamPage.clickDeleteBtn();
+        await operationTeamPage.clickConfirmationYes();
+        await operationTeamPage.validateToastMessage('User profile deleted successfully');
+        await page.waitForTimeout(2000);
+    })
+
+
+    test('TC012 - add operation user details with invalid data', async () => {
+        const operationTeamPage = new OperationTeamPage(page);
+        await operationTeamPage.clickAddOperationUserBtn();
+        await operationTeamPage.clickSaveBtn();
+        const getErrorMessage = await operationTeamPage.validateFieldErrorMessage();
+        console.log('Error messages are:' + getErrorMessage);
+        await operationTeamPage.clickCancelBtn();
+        await page.waitForTimeout(2000);
+    })
+
+
+    test('TC013 - get admin roles count', async () => {
+        const operationTeamPage = new OperationTeamPage(page)
+        const count = await operationTeamPage.getRolesCount.textContent();
+        console.log('Total roles count is:' + count);
+        await page.waitForTimeout(2000);
     })
 
 
