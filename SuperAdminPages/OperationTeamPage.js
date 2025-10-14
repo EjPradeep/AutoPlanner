@@ -29,39 +29,50 @@ class RolesPage {
         this.cancelBtn = page.locator("//button[text()='Cancel']");
 
         //Add Operation Users
-        
         this.roles = page.locator("#roles");
+
+        //Toast Message
         this.toastMessage = page.locator("//div[@class='MuiAlert-message css-1xsto0d']");
         this.closeIcon = page.locator("[aria-label='Close']");
 
-        //edit
-        this.menuBtn = page.locator("button[aria-label='more']");
-        this.updateBtn = page.locator("//ul//li").nth(0);
-        this.deleteBtn = page.locator("//ul//li").nth(1);
-
         //confirmation
-
         this.confirmationMessageYes = page.locator("//button[text()='Yes']");
         this.confirmationMessageNo = page.locator("//button[text()='No']");
         this.errorMessage = page.locator("//div[@class='MuiAlert-message css-1xsto0d']");
-        this.fieldErrorMessage = page.locator("#rolename-helper-text");
+        this.fieldErrorMessage = page.locator("//div[@class='text-field yaantrac MuiBox-root css-0']//p");
     }
 
-    async navigateToRoles() {
+    async navigateToOperationTeam() {
         await this.userManagement.click();
         await this.page.waitForTimeout(1000);
+        await this.operationTeamTab.click();
+        await this.page.waitForTimeout(1000);
     }
 
-    async clickAddRoleBtn() {
-        await this.addRoleBtn.click();
+    async navigateToOperationAdminTab() {
+        await this.page.waitForTimeout(1000);
+        await this.operationAdminTab.click();
+    }
+
+    async clickAddOperationAdminBtn() {
+        await this.addOperationAdminBtn.click();
         await this.page.waitForTimeout(1000);
     }
 
 
-    async addRoleDetails(roleName, description) {
-        await this.roleName.fill(roleName);
+    async addDetails(contactPerson, contactNo,emailAddress,userName,password,confirmPassword) {
+        await this.contactPerson.fill(contactPerson);
         await this.page.waitForTimeout(1000);
-        await this.description.fill(description);
+        await this.contactNo.fill(contactNo);
+        await this.page.waitForTimeout(1000);
+        await this.emailAddress.fill(emailAddress);
+        await this.page.waitForTimeout(1000);
+        await this.userName.fill(userName);
+        await this.page.waitForTimeout(1000);
+        await this.password.fill(password);
+        await this.page.waitForTimeout(1000);
+        await this.confirmPassword.fill(confirmPassword);
+        await this.confirmPasswordEyeIcon.click();
         await this.page.waitForTimeout(1000);
     }
 
