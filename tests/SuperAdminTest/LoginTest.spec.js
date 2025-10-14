@@ -2,32 +2,30 @@ const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../../SuperAdminPages/LoginPage');
 
 
-
 test.describe('TS01 - Login', async () => {
 
 
-
-    test('TC_Login_001 - Login with valid credentials', async ({ page }) => {
+    test('TC001 - Login with valid credentials', async ({page}) => {
         const loginpage = new LoginPage(page);
         await loginpage.LaunchUrl('https://dev-v2.yaantrac.com/');
         await loginpage.enterTheCredentials('raaja', 'Raaja@123');
     })
 
-    test('TC_Login_002 - Login with Invalid UserName', async ({ page }) => {
+    test('TC002 - Login with Invalid UserName', async ({page}) => {
         const loginpage = new LoginPage(page);
         await loginpage.LaunchUrl('https://dev-v2.yaantrac.com/');
         await loginpage.enterTheCredentials('raaja', 'Atcoperator@123');
         await loginpage.validationMessage('Invalid Username or Password');
     })
 
-    test('TC_Login_003 - Login with valid Password', async ({ page }) => {
+    test('TC003 - Login with valid Password', async ({page}) => {
         const loginpage = new LoginPage(page);
         await loginpage.LaunchUrl('https://dev-v2.yaantrac.com/');
         await loginpage.enterTheCredentials('atcOperator', 'Atcoper@3');
         await loginpage.validationMessage('Invalid Username or Password');
     })
 
-    test('TC_Login_004 - Login without credentials', async ({ page }) => {
+    test('TC004 - Login without credentials', async ({page}) => {
         const loginpage = new LoginPage(page);
         await loginpage.LaunchUrl('https://dev-v2.yaantrac.com/');
         await loginpage.enterTheCredentials('', '');
