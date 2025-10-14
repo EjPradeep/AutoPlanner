@@ -8,8 +8,11 @@ let context;
 
 test.describe('TS_006', async()=>{
     test.beforeAll('Tour Module', async({browser})=>{
-        context = new browser.newContext();
-        page = new context.newPage();
+        context = await browser.newContext({
+        viewport: { width: 1200, height: 600},
+    });
+
+        page = await context.newPage();
         const loginpage = new LoginPage(page);
         await loginpage.LaunchUrl('https://dev-v2.yaantrac.com/');
         await loginpage.enterTheCredentials('atcOperator', 'Atcoperator@123');
