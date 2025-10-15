@@ -5,7 +5,7 @@ const { AgentPage } = require('../../SuperAdminPages/AgentPage');
 let context;
 let page;
 
-test.describe('TS01 - Login', async () => {
+test.describe.serial('TS01 - Login', async () => {
 
     test.beforeAll('Reports Module', async ({ browser }) => {
         context = await browser.newContext({
