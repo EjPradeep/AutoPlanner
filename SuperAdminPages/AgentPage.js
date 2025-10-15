@@ -1,26 +1,27 @@
 const { expect } = require('@playwright/test');
 
-class OperationTeamPage {
+class AgentPage {
 
     constructor(page) {
         this.page = page;
 
         //Dashboard
         this.userManagement = page.locator("//span[@aria-label='User Management']");
-        this.operationTeamTab = page.locator("//div[@aria-label='users tabs']/button").nth(1);
-        this.operationAdminTab = page.locator("#custom-tab-0");
-        this.operationUserTab = page.locator("#custom-tab-1");
+        this.agentTab = page.locator("//div[@aria-label='users tabs']/button").nth(2);
+        this.agentAdminTab = page.locator("#custom-tab-0");
+        this.rateCardTab = page.locator("#custom-tab-1");
         this.search = page.locator("#filter-input");
-        this.addOperationAdminBtn = page.locator("//button[text()='Add Operation Admin']");
-        this.addOperationUserBtn = page.locator("//button[text()='Add Operation User']");
+        this.addAgentAdminBtn = page.locator("//button[text()='Add Agent Admin']");
         this.getRolesCount = page.locator("//h5[@class='MuiTypography-root MuiTypography-h5 css-17n64l0']/span");
 
-        //Add Operation Admin
-        this.addOperationAdminTab = page.locator(".MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.MuiButtonGroup-grouped.MuiButtonGroup-groupedHorizontal.MuiButtonGroup-groupedOutlined.MuiButtonGroup-groupedOutlinedHorizontal.MuiButtonGroup-groupedOutlinedPrimary.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.layout-active.layout-btn.MuiButtonGroup-firstButton.css-79xub");
-        this.addOperationUserTab = page.locator(".MuiButtonBase-root.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.MuiButtonGroup-grouped.MuiButtonGroup-groupedHorizontal.MuiButtonGroup-groupedOutlined.MuiButtonGroup-groupedOutlinedHorizontal.MuiButtonGroup-groupedOutlinedPrimary.MuiButton-root.MuiButton-outlined.MuiButton-outlinedPrimary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButton-colorPrimary.layout-btn.MuiButtonGroup-lastButton.css-79xub");
+        //Add Agent Admin
+        this.agentName = page.locator("#companyName");
         this.contactPerson = page.locator("#contactperson");
-        this.contactNo = page.locator("input[placeholder='Contact Number']");
+        this.contactNo = page.locator("//input[@placeholder='Contact Number']");
         this.emailAddress = page.locator("#email");
+        this.ratecard = page.locator("#ratecard");
+        this.country = page.locator("#country");
+        this.websiteUrl = page.locator("#website");
         this.userName = page.locator("#agentname");
         this.password = page.locator("#password");
         this.passwordEyeIcon = page.locator("#password~div>button");
@@ -29,8 +30,13 @@ class OperationTeamPage {
         this.saveBtn = page.locator("//button[@type='submit']");
         this.cancelBtn = page.locator("//button[text()='Cancel']");
 
-        //Add Operation Users
-        this.roles = page.locator("#roles");
+        //Add rate card
+        this.rateCardName = page.locator("#rateCardName");
+        this.currency = page.locator("input[placeholder='USD or United...']");
+        this.sicTab = page.locator("//div[@aria-label='secondary tabs example']/button").nth(0);
+        this.tsicTab = page.locator("//div[@aria-label='secondary tabs example']/button").nth(1);
+        this.pvtTab = page.locator("//div[@aria-label='secondary tabs example']/button").nth(2);
+        this.grpTab = page.locator("//div[@aria-label='secondary tabs example']/button").nth(3);
 
         //edit and delete 
         this.roles = page.locator("#roles");
@@ -49,16 +55,16 @@ class OperationTeamPage {
         this.fieldErrorMessage = page.locator("//div[@class='text-field yaantrac MuiBox-root css-0']//p");
     }
 
-    async navigateToOperationTeam() {
+    async navigateToAgent() {
         await this.userManagement.click();
         await this.page.waitForTimeout(1000);
-        await this.operationTeamTab.click();
+        await this.agentTab.click();
         await this.page.waitForTimeout(1000);
     }
 
-    async navigateToOperationAdminTab() {
+    async navigateToAgentAdminTab() {
         await this.page.waitForTimeout(1000);
-        await this.operationAdminTab.click();
+        await this.agentAdminTab.click();
     }
 
     async navigateToOperationUserTab() {
@@ -66,27 +72,34 @@ class OperationTeamPage {
         await this.operationUserTab.click();
     }
 
-    async clickAddOperationAdminBtn() {
-        await this.addOperationAdminBtn.click();
-        await this.page.waitForTimeout(1000);
-        await this.addOperationAdminTab.click();
+    async clickAddAgentAdminBtn() {
+        await this.addAgentAdminBtn.click();
         await this.page.waitForTimeout(1000);
     }
 
     async clickAddOperationUserBtn() {
         await this.addOperationUserBtn.click();
         await this.page.waitForTimeout(2000);
-         await this.addOperationUserTab.click();
-        await this.page.waitForTimeout(1000);
+      
     }
 
 
-    async addOperationAdminDetails(contactPerson, contactNo,emailAddress,userName,password,confirmPassword) {
+    async addAgentAdminDetails(agentName, contactPerson, contactNo, emailAddress, rateCard, country, websiteUrl, userName, password, confirmPassword) {
+        await this.agentName.fill(agentName);
+        await this.page.waitForTimeout(1000);
         await this.contactPerson.fill(contactPerson);
         await this.page.waitForTimeout(1000);
         await this.contactNo.fill(contactNo);
         await this.page.waitForTimeout(1000);
         await this.emailAddress.fill(emailAddress);
+        await this.page.waitForTimeout(1000);
+        await this.ratecard.fill(rateCard);
+        await this.page.locator(`//ul//li[text()='${rateCard}']`).click();
+        await this.page.waitForTimeout(1000);
+        await this.country.fill(country);
+        await this.page.locator(`//ul//li[text()='${country}']`).click();
+        await this.page.waitForTimeout(1000);
+        await this.websiteUrl.fill(websiteUrl);
         await this.page.waitForTimeout(1000);
         await this.userName.fill(userName);
         await this.page.waitForTimeout(1000);
@@ -97,7 +110,7 @@ class OperationTeamPage {
         await this.page.waitForTimeout(1000);
     }
 
-    async addOperationUserDetails(contactPerson,role, contactNo,emailAddress,userName,password,confirmPassword) {
+    async addOperationUserDetails(contactPerson, role, contactNo, emailAddress, userName, password, confirmPassword) {
         await this.contactPerson.fill(contactPerson);
         await this.page.waitForTimeout(1000);
         await this.roles.fill(role);
@@ -116,14 +129,24 @@ class OperationTeamPage {
         await this.page.waitForTimeout(1000);
     }
 
-    async editOperationAdminDetails(contactNo,emailAddress) {
+    async editAgentAdminDetails(agentName, contactNo, emailAddress, rateCard, country, websiteUrl) {
+       await this.agentName.fill(agentName);
+        await this.page.waitForTimeout(1000);
         await this.contactNo.fill(contactNo);
         await this.page.waitForTimeout(1000);
         await this.emailAddress.fill(emailAddress);
         await this.page.waitForTimeout(1000);
+        await this.ratecard.fill(rateCard);
+        await this.page.locator(`//ul//li[text()='${rateCard}']`).click();
+        await this.page.waitForTimeout(1000);
+        await this.country.fill(country);
+        await this.page.locator(`//ul//li[text()='${country}']`).click();
+        await this.page.waitForTimeout(1000);
+        await this.websiteUrl.fill(websiteUrl);
+        await this.page.waitForTimeout(1000);
     }
 
-    async editOperationUserDetails(role,contactNo,emailAddress) {
+    async editOperationUserDetails(role, contactNo, emailAddress) {
         await this.roles.fill(role);
         await this.page.locator(`//ul[@class='MuiAutocomplete-groupUl css-15s1ek9']/li[contains(text(),'${role}')]`).click();
         await this.page.waitForTimeout(1000);
@@ -133,7 +156,7 @@ class OperationTeamPage {
         await this.page.waitForTimeout(1000);
     }
 
-   
+
 
     async clickSaveBtn() {
         await this.saveBtn.click();
@@ -158,14 +181,14 @@ class OperationTeamPage {
     async validateToastMessage(value) {
         await this.page.waitForTimeout(1000);
         const getText = await this.toastMessage.textContent();
-         await expect(getText).toBe(value);      
+        await expect(getText).toBe(value);
 
     }
 
     async validateFieldErrorMessage() {
         await this.page.waitForTimeout(1000);
         const count = await this.fieldErrorMessage.count();
-        const value=[];
+        const value = [];
         for (let i = 0; i < count; i++) {
             const getText = await this.fieldErrorMessage.nth(i).textContent();
             value.push(getText);
@@ -194,7 +217,6 @@ class OperationTeamPage {
         await this.confirmationMessageYes.click();
         await this.page.waitForTimeout(1000);
 
-
     }
 
     async clickConfirmationNo() {
@@ -206,4 +228,4 @@ class OperationTeamPage {
 
 }
 
-module.exports = { OperationTeamPage };
+module.exports = { AgentPage };
