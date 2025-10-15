@@ -31,6 +31,8 @@ class AgentPage {
         this.cancelBtn = page.locator("//button[text()='Cancel']");
 
         //Add rate card
+        this.addRateCardBtn = page.locator("//button[text()='Add Rate Card']");
+        this.closeIconRateCard = page.locator("//*[@class='ratecard-close-icon iconify iconify--ic']");
         this.rateCardName = page.locator("#rateCardName");
         this.currency = page.locator("input[placeholder='USD or United...']");
         this.sicTab = page.locator("//div[@aria-label='secondary tabs example']/button").nth(0);
@@ -41,6 +43,7 @@ class AgentPage {
         //edit and delete 
         this.roles = page.locator("#roles");
         this.menuBtn = page.locator("#button");
+        this.rateCardMenuBtn = page.locator("//*[@class='MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv']");
         this.updateBtn = page.locator("//ul//li").nth(0);
         this.deleteBtn = page.locator("//ul//li").nth(1);
 
@@ -67,20 +70,10 @@ class AgentPage {
         await this.agentAdminTab.click();
     }
 
-    async navigateToOperationUserTab() {
-        await this.page.waitForTimeout(1000);
-        await this.operationUserTab.click();
-    }
 
     async clickAddAgentAdminBtn() {
         await this.addAgentAdminBtn.click();
         await this.page.waitForTimeout(1000);
-    }
-
-    async clickAddOperationUserBtn() {
-        await this.addOperationUserBtn.click();
-        await this.page.waitForTimeout(2000);
-      
     }
 
 
@@ -110,51 +103,116 @@ class AgentPage {
         await this.page.waitForTimeout(1000);
     }
 
-    async addOperationUserDetails(contactPerson, role, contactNo, emailAddress, userName, password, confirmPassword) {
-        await this.contactPerson.fill(contactPerson);
-        await this.page.waitForTimeout(1000);
-        await this.roles.fill(role);
-        await this.page.locator(`//ul[@class='MuiAutocomplete-groupUl css-15s1ek9']/li[contains(text(),'${role}')]`).click();
-        await this.page.waitForTimeout(1000);
-        await this.contactNo.fill(contactNo);
-        await this.page.waitForTimeout(1000);
-        await this.emailAddress.fill(emailAddress);
-        await this.page.waitForTimeout(1000);
-        await this.userName.fill(userName);
-        await this.page.waitForTimeout(1000);
-        await this.password.fill(password);
-        await this.page.waitForTimeout(1000);
-        await this.confirmPassword.fill(confirmPassword);
-        await this.confirmPasswordEyeIcon.click();
-        await this.page.waitForTimeout(1000);
-    }
-
     async editAgentAdminDetails(agentName, contactNo, emailAddress, rateCard, country, websiteUrl) {
-       await this.agentName.fill(agentName);
+        await this.agentName.fill(agentName);
         await this.page.waitForTimeout(1000);
         await this.contactNo.fill(contactNo);
         await this.page.waitForTimeout(1000);
         await this.emailAddress.fill(emailAddress);
         await this.page.waitForTimeout(1000);
         await this.ratecard.fill(rateCard);
-        await this.page.locator(`//ul//li[text()='${rateCard}']`).click();
         await this.page.waitForTimeout(1000);
         await this.country.fill(country);
-        await this.page.locator(`//ul//li[text()='${country}']`).click();
         await this.page.waitForTimeout(1000);
         await this.websiteUrl.fill(websiteUrl);
         await this.page.waitForTimeout(1000);
     }
+    //--------------------------------------Rate Card---------------------------------------------
 
-    async editOperationUserDetails(role, contactNo, emailAddress) {
-        await this.roles.fill(role);
-        await this.page.locator(`//ul[@class='MuiAutocomplete-groupUl css-15s1ek9']/li[contains(text(),'${role}')]`).click();
+    async navigateToRateCardTab() {
         await this.page.waitForTimeout(1000);
-        await this.contactNo.fill(contactNo);
+        await this.rateCardTab.click();
+    }
+
+
+    async clickAddRateCardBtn() {
+        await this.addRateCardBtn.click();
+        await this.page.waitForTimeout(2000);
+
+    }
+
+    async addRateCardDetails(rateCardName, currency) {
+        await this.rateCardName.fill(rateCardName);
         await this.page.waitForTimeout(1000);
-        await this.emailAddress.fill(emailAddress);
+        await this.currency.fill(currency);
+        await this.page.locator(`//span[text()='${currency}']/../..`).click();
         await this.page.waitForTimeout(1000);
     }
+
+    async clickSICTab() {
+        await this.sicTab.click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async clickTSICTab() {
+        await this.tsicTab.click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async clickGRPTab() {
+        await this.grpTab.click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async clickPVTTab() {
+        await this.pvtTab.click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async addPriceDetails(tourName, price) {
+        const value = await this.page.locator("//tr[@class='MuiBox-root css-0']/td/p");
+        for (let i = 0; i < await value.count(); i++) {
+            const getTourname = await value.nth(i).textContent();
+
+            if (tourName.includes(getTourname)) {
+                await this.page.locator(`//p[text()='${getTourname}']/../following-sibling::td/button`).click();
+                await this.page.waitForTimeout(2000);
+                const seatPrice = await this.page.locator(`//p[text()='${getTourname}']/../following-sibling::td/div/div/div/input`);
+
+                for (let j = 0; j < await seatPrice.count(); j++) {
+                    await seatPrice.nth(j).fill(price);
+                }
+                await this.page.locator("//*[@class='iconify iconify--hugeicons']").click();
+
+
+
+            }
+        }
+        await this.page.waitForTimeout(1000);
+    }
+
+
+
+    async editRateCardDetails(rateCardName, currency) {
+        await this.rateCardName.fill(rateCardName);
+        await this.page.waitForTimeout(1000);
+        await this.currency.fill(currency);
+        await this.page.locator(`//span[text()='${currency}']/../..`).click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async editPriceDetails(tourName, price) {
+        const value = await this.page.locator("//tr[@class='MuiBox-root css-0']/td/p");
+        for (let i = 0; i < await value.count(); i++) {
+            const getTourname = await value.nth(i).textContent();
+
+            if (tourName.includes(getTourname)) {
+                await this.page.locator(`//p[text()='${getTourname}']/../following-sibling::td/button`).click();
+                await this.page.waitForTimeout(2000);
+                const seatPrice = await this.page.locator(`//p[text()='${getTourname}']/../following-sibling::td/div/div/div/input`);
+
+                for (let j = 0; j < await seatPrice.count(); j++) {
+                    await seatPrice.nth(j).fill(price);
+                }
+                await this.page.locator("//*[@class='iconify iconify--hugeicons']").click();
+
+
+
+            }
+        }
+        await this.page.waitForTimeout(1000);
+    }
+
 
 
 
@@ -198,7 +256,7 @@ class AgentPage {
     }
 
     async clickUpdateBtn() {
-        await this.menuBtn.click();
+        await this.rateCardMenuBtn.click();
         await this.page.waitForTimeout(1000);
         await this.updateBtn.click();
         await this.page.waitForTimeout(1000);
@@ -206,7 +264,7 @@ class AgentPage {
     }
 
     async clickDeleteBtn() {
-        await this.menuBtn.click();
+        await this.rateCardMenuBtn.click();
         await this.page.waitForTimeout(1000);
         await this.deleteBtn.click();
         await this.page.waitForTimeout(1000);
