@@ -51,21 +51,25 @@ test('TC05 - click  Schedule or Reschedule ', async () => {
         const {ScheduleButton} = summarydata[1];  //0-Schedule  1-Reschedule     
          await summaryPage.ScheduleModule(ScheduleButton);
 })
-test('TC06 - click  Tab', async () => {
+test.skip('TC06 - Click view schudel button', async () => {
+        const summaryPage = new SummaryPage(page);
+        await summaryPage.ViewSchedulebutton();
+})
+test('TC07 - click  Tab', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary");
          const {Tab} = summarydata[1]; //0-sic,1-tsic,2-Pvt,3-grp
         await summaryPage.selectTab(Tab);
 })
-test('TC07 - Search', async () => {
+test('TC08 - Search', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary");
-         const {Tab} = summarydata[0];//0-sic,1-tsic,2-Pvt,3-grp
-        await summaryPage.selectTab(Tab);
+         const {Search} = summarydata[1]; 
+        await summaryPage.searchthedetails(Search);
 })
-test('TC08 - Tour ', async () => {
+test('TC09 - Tour ', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary");
@@ -73,27 +77,27 @@ test('TC08 - Tour ', async () => {
         await summaryPage.Tour(TourName);
 })
 
-test('TC09 -  Vehicle  ', async () => {
+test('TC10 -  Vehicle  ', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary");
         const {Coaches,View} = summarydata[0];
         await summaryPage.Vehicle(Coaches,View);
 })
-test('TC10 - After Schedule (Vehicle) ', async () => {
+test('TC11 - After Schedule (Add External Vehicle) ', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary");
-        const {Switch} = summarydata[0];
+        const {Switch} = summarydata[1];//0-sic,1-tsic,2-Pvt,3-grp,4-Transfer
         const {VehicleNumber,Seating,Drivername,ContactNumber} = summarydata[0];
         await summaryPage.AddExternalVehicle(Switch,VehicleNumber,Seating,Drivername,ContactNumber);
 })
 
- test.skip('TC011 - cloase the add extenal vehicale tab ', async () => {
+ test.skip('TC012 - close the add extenal vehicale tab ', async () => {
         const summaryPage = new SummaryPage(page);
         await summaryPage.closevehicle();
 })
-test('TC12 - Guide ', async () => {
+test('TC13 - Guide ', async () => {
         const summaryPage = new SummaryPage(page);
         const excelReader = new ExcelReader();
         const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary"); 
@@ -101,8 +105,25 @@ test('TC12 - Guide ', async () => {
         await summaryPage.guide(GuideName,GuideContact,HotelName);
 
 })
- test.skip('TC013 - Guide close', async () => {
+ test.skip('TC14 - Guide close', async () => {
         const summaryPage = new SummaryPage(page);
         await summaryPage.closeGuide();
+})
+
+ test('TC15 - Click Save button ', async () => {
+        const summaryPage = new SummaryPage(page);
+        await summaryPage.clickSave_Final();
+})
+test.skip('TC16 - Click Save No ', async () => {
+        const summaryPage = new SummaryPage(page);
+        await summaryPage.clickSave_Yes();
+        await summaryPage.clickviewShedule_save();
+})
+test('TC17 - Suggestion ', async () => {
+        const summaryPage = new SummaryPage(page);
+        const excelReader = new ExcelReader();
+        const summarydata = await excelReader.readExcel("C:/Users/TamilselviArul/Downloads/Autoplannerdata.xlsx", "Summary"); 
+        const {SuggestSearch} = summarydata[0];
+        await summaryPage.suggestion(SuggestSearch);
 })
 })

@@ -14,7 +14,8 @@ class SummaryPage {
         this.filterbtn = page.locator("//button[text()='Filter']");
         this.clearfilterbtn = page.locator("//button[text()='Clear filter']");
 
-
+        // View Schedule
+        this.View_Schedule = page.locator("//div[text()='View Schedule']");
         this.tourbtn = page.locator("//button[text()='Tours']");
         this.close = page.locator("//*[@class='routes-close-icon iconify iconify--ic']")
 
@@ -53,6 +54,30 @@ class SummaryPage {
         this.closeicon = page.locator("//*[@class='routes-close-icon iconify iconify--ic']");
 
 
+        //Schedulebutonn
+        this.schedulebuttonfinal = page.locator("//p[text()='Schedule']");
+        this.close_schedule=page.locator("//*[@class='routes-close-icon iconify iconify--ic']")
+        // Save button
+        this.Savebuttonfinal = page.locator("//p[text()='Save']");
+        this.save_no=page.locator("//button[text()='No']");
+        this.save_yes=page.locator("//button[text()='Yes']");
+        //View Schedule
+        this.viewschedule_aftersave=page.locator("//p[text()='View Scheduled']");
+        this.download=page.locator("//*[@aria-label='Downlaod']");
+
+
+        //Change Table
+        this.table = page.locator("(//*[@class='iconify iconify--hugeicons'])[2]");
+
+        //suggeston droparrow
+        this.droparrow=page.locator("//*[@class='iconify iconify--icon-park-outline']");
+        //Search
+        this.suggest_search=page.locator("(//input[@placeholder='Search…'])[2]");
+       //Close
+        this.suggest_close=page.locator("//*[@class='feedback-close-icon iconify iconify--ic']");
+
+
+
 
 
 
@@ -81,26 +106,40 @@ class SummaryPage {
     async ScheduleModule(Schedulebtn) {
         await this.page.locator(`//div[text()='${Schedulebtn}']`).click();
     }
+    async ViewSchedulebutton(){
+        await this.View_Schedule.click();
+    }
 
     async selectTab(tab) {
-        await this.page.locator(`//p[text()='${tab}']`).click({});
+        const Tab = await this.page.locator(`//p[text()='${tab}']`);
+        await Tab.hover();
+        await Tab.click({ force: true });
     }
+
     async searchthedetails(search) {
         await this.searchbox.fill(search);
     }
+
     async Tour() {
         await this.tourbtn.click();
         await this.page.locator(`(//p[text()='View Details'])[1]`).click();
         await this.close.click();
     }
+
     async Vehicle(coach, view) {
         await this.vehiclebtn.click();
         await this.page.locator(`//p[text()='${coach}']/../../preceding-sibling::div`).click()
         await this.page.locator(`//p[text()='${view}']/../../following-sibling::div/div/button`).click({ force: true });
+        
+        await this.schedulebuttonfinal.click();
+        await page.waitForSelector("//*[@class='routes-close-icon iconify iconify--ic']", { state: 'visible', timeout: 5000 });
+        await this.close_schedule.click();
+
     }
+
     async AddExternalVehicle(vehicle, vehicleNum, Seat, driver, contact) {
         await this.addExternalVehiclebtn.click();
-        await this.page.locator(`//button[text()='${vehicle}']`).click();
+        await this.page.locator(`//button[text()='${vehicle}']`).click({ force: true });
         await this.vehicleNumberfield.fill(vehicleNum);
         await this.seatingfield.fill(Seat);
         await this.drivernamefield.fill(driver);
@@ -108,23 +147,49 @@ class SummaryPage {
         await this.addvehiclebtn.click();
 
     }
+
     async closevehicle() {
         await this.closevehicletab.click();
     }
+
     async guide(guidename, number, hotel) {
         await this.guidebtn.click();
         await this.addguide.click()
-        await this.guidename_field.fiil(guidename);
+        await this.guidename_field.fill(guidename);
         await this.contactnumber.fill(number);
         await this.hotelname.fill(hotel);
         await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter');
-
         await this.savebutton.click();
     }
+
     async closeGuide() {
         await this.closeicon.click();
     }
-
+    
+     async clickSave_Final() {
+        await this.Savebuttonfinal.click();
+        await this.save_no.click();
+    
+    }
+     
+    async clickSave_Yes() {
+        await this.save_yes.click();
+        await this.download.click();
+    
+    }
+    async clickviewShedule_save(){
+        await this.viewschedule_aftersave.click();
+    }
+    async suggestion(search){
+        const  suggest=await this.page.locator("//*[@class='suggestions-button-icon iconify iconify--mage']");
+        await suggest.hover();
+        await suggest.click();
+        await this.droparrow.click();
+        await this.suggest_search.fill(search);
+        await this.suggest_close.click();
+    }
+    
 }
+
 module.exports = { SummaryPage };
