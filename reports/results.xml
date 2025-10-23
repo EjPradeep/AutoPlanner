@@ -1,0 +1,8 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="27.118757000000002">
+<testsuite name="SuperAdminTest\TourTest.spec.js" timestamp="2025-10-23T06:31:48.860Z" hostname="chromium" tests="2" failures="0" skipped="0" time="16.339" errors="0">
+<testcase name="TS_006 › TC001 - Navigate to the Tour Module" classname="SuperAdminTest\TourTest.spec.js" time="2.37">
+</testcase>
+<testcase name="TS_006 › TC008 - Add a Regular tour with valid data" classname="SuperAdminTest\TourTest.spec.js" time="13.969">
+</testcase>
+</testsuite>
+</testsuites>

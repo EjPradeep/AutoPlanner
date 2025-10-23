@@ -2,6 +2,7 @@ const { test } = require ('@playwright/test');
 const { LoginPage } = require ('../../SuperAdminPages/LoginPage');
 const { TourPage } = require ('../../SuperAdminPages/TourPage');
 const { ExcelReader } = require('../../Utils/ExcelReader');
+const { assert } = require('console');
 
 let page;
 let context;
@@ -22,12 +23,58 @@ test.describe('TS_006', async()=>{
         const tourmodule = new TourPage(page);
         await tourmodule.navigateToTheTourScreen();
     })
-
+/*
     test('TC002 - Add a new Two Way Tour with valid data.', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName, Alias, TourType, TourMode, Location } = TWTData[0];
         await tourmodule.addNewTourFor_TWT(TourName, Alias, TourType, TourMode, Location);
+    }) 
+
+    test('TC003 - Update the Two way tour with valid data', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourName, Alias, TourMode } = TWTData[1];
+        await tourmodule.update_TwoWayTour(TourName, Alias, TourMode);
+    })
+
+    test('TC004 - Verify that the application displays the error message when the user without enter the data.', async()=>{
+        const tourmodule = new TourPage(page);
+        await tourmodule.addTourwithWithoutData();
+    })
+        
+
+    test('TC005 - Add a new two way tour without data', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourName, TourMode, TourType, Location } = TWTData[3];
+        await tourmodule.addNewTourWithInvalidData(TourName, TourMode, TourType, Location);
+    })
+
+    test('TC006 - Add a new Disposal Tour with valid data.', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourName , TourMode } = TWTData[4];
+        await tourmodule.addDisposalTour(TourName, TourMode);
+    })
+
+    test('TC007 - Update disposal tour with valid data.', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourName , TourMode } = TWTData[5];
+        await tourmodule.addDisposalTour(TourName, TourMode);
+    })
+*/
+    test('TC008 - Add a Regular tour with valid data', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount } = TWTData[6];
+        await tourmodule.addRegularTour(TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
     })
 })
