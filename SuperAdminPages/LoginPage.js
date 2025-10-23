@@ -2,6 +2,7 @@ const {expect} = require ('@playwright/test');
  
 class LoginPage{
  
+
     constructor(page){
         this.page=page;
         this.LoginButton = page.locator("//div[@class='MuiStack-root navbar-data-parent css-kzi4bb']//button");
