@@ -75,18 +75,33 @@ class BookingsPage {
 
 
         //Search
-        this.search=page.locator("#filter-input");
-        this.SIC_tab=page.locator("//button[text()='SIC']");
-        this.Menuicon=page.locator("//*[@data-testid='MenuIcon']");
+        this.search = page.locator("#filter-input");
+        this.RLRSearch = page.locator("#search");
 
-        this.updatebtn=page.locator("//li[text()='Update']");
-        this.deletebtn=page.locator("//li[text()='Delete']");
+        this.SIC_tab = page.locator("//button[text()='SIC']");
+        this.TSIC_tab = page.locator("//button[text()='TSIC']");
+        this.PVT_tab = page.locator("//button[text()='PVT']");
+        this.GRP_tab = page.locator("//button[text()='GRP']");
+        this.RLR_tab = page.locator("//button[text()='RLR']");
+        this.Menuicon = page.locator("//*[@data-testid='MenuIcon']");
 
-        this.yes_delete=page.locator("//button[text()='Yes']");
-        this.no_delete=page.locator("//button[text()='No']");
+        this.updatebtn = page.locator("//li[text()='Update']");
+        this.deletebtn = page.locator("//li[text()='Delete']");
+
+        this.yes_delete = page.locator("//button[text()='Yes']");
+        this.no_delete = page.locator("//button[text()='No']");
 
 
+        //Import
+        this.Importbtn = page.locator("(//button[text()='Import'])[1]");
+        this.clickupload = page.locator("//div[text()='Click to Upload file']");
 
+        this.no_import = page.locator("//button[text()='No']");
+        this.yes_import = page.locator("//button[text()='Yes']");
+        this.Cancelimport = page.locator("//button[text()='Cancel']");
+        this.upload_importbtn = page.locator("(//button[text()='Import'])[2]");
+        //Click Close
+        this.close = page.locator("//button[text()='Close']");
 
 
 
@@ -201,7 +216,7 @@ class BookingsPage {
     }
 
 
-    async filter(agent, tourname, tourdate) {
+    async filter(agent, tourname) {
         await this.filtericon.click();
 
         await this.agentfilter.fill(agent);
@@ -212,13 +227,15 @@ class BookingsPage {
         await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter');
 
-        await this.tourdatefilter.click(tourdate);
+
+        await this.dateicon.click();
         await this.selectdate.click();
 
     }
-    async clickcancelfilter() {
+    async clickclearfilter() {
         await this.cancel_filter.click();
         await this.backicon.click();
+        await this.page.waitForTimeout(2000);
     }
     async Applyfilter() {
         await this.Applyfilterbtn.click();
@@ -228,30 +245,76 @@ class BookingsPage {
     async searchSIC(tourname) {
         await this.SIC_tab.click();
         await this.search.fill(tourname);
-        await this.page.locator(`//span[text()='${tourname}']/../preceding-sibling::div/div/p[text()='View Bookings']`).click();
+        await this.page.locator(`(//p[text()='View Bookings'])[1]`).click();
+        await this.page.waitForTimeout(2000);
+        //await this.Menuicon.click();
+
+    }
+    async updatethebookings(guest) {
+        await this.updatebtn.click();
+        await this.guestnamefield.fill(guest);
+        await this.cancelbtn_booking.click();
         await this.Menuicon.click();
 
     }
-    async updatethebookings(guest){
-    await this.updatebtn.click();
-    await this.guestnamefield.fill(guest);
-
-
-
+    async canceldeletethebooking() {
+        await this.deletebtn.click();
+        await this.no_delete.click();
     }
-    async deletethebooking(){
-    await this.deletebtn.click();
-    await this.no_delete.click();
-    //await this.deletebtn.click();
-    //await this.yes_delete.click();
-
-
+    async Deletethebooking() {
+        await this.deletebtn.click();
+        await this.yes_delete.click();
     }
+
     async searchTSIC(tourname) {
-        await this.SIC_tab.click();
+        await this.TSIC_tab.click();
         await this.search.fill(tourname);
-        await this.page.locator(`//span[text()='${tourname}']/../preceding-sibling::div/div/p[text()='View Bookings']`).click();
+        await this.page.locator(`(//p[text()='View Bookings'])[1]`).click();
+        await this.page.waitForTimeout(2000);
+        //await this.Menuicon.click();
 
     }
+    async searchPVT(tourname) {
+        await this.PVT_tab.click();
+        await this.search.fill(tourname);
+        await this.page.waitForTimeout(2000);
+        //await this.Menuicon.click();
+
+    }
+    async searchGRP(tourname) {
+        await this.GRP_tab.click();
+        await this.search.fill(tourname);
+        await this.page.waitForTimeout(2000);
+        await this.Menuicon.click();
+
+    }
+    async searchRLR(tourname) {
+        await this.RLR_tab.click();
+        await this.RLRSearch.fill(tourname);
+
+    }
+    async import(filepath) {
+        await this.Importbtn.click();
+        const [fileChooser] = await Promise.all([
+            this.page.waitForEvent('filechooser'),
+            this.clickupload.click()
+        ]);
+        await fileChooser.setFiles(filepath);
+
+    }
+    async cancel_import(){
+        await this.no_import.click();
+        await this.Cancelimport.click();
+
+
+    }
+    async Saveimport(){
+        await this.yes_import.click();
+        await this.upload_importbtn.click();
+        await this.close.click();
+    }
+    
 }
+
+
 module.exports = { BookingsPage };
