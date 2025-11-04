@@ -9,7 +9,7 @@ test.describe('TS03', async()=>{
 
     test.beforeAll('Reports Module', async({browser})=>{
         context = await browser.newContext({
-            viewport: { width: 1200, height: 600 },
+            // viewport: { width: 1200, height: 600 },
             geolocation: {latitude: 12.939965304673995, longitude: 80.11990807936198},
             permissions: ['geolocation'],
     });
