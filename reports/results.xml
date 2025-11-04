@@ -1,8 +1,24 @@
-<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="27.118757000000002">
-<testsuite name="SuperAdminTest\TourTest.spec.js" timestamp="2025-10-23T06:31:48.860Z" hostname="chromium" tests="2" failures="0" skipped="0" time="16.339" errors="0">
-<testcase name="TS_006 › TC001 - Navigate to the Tour Module" classname="SuperAdminTest\TourTest.spec.js" time="2.37">
-</testcase>
-<testcase name="TS_006 › TC008 - Add a Regular tour with valid data" classname="SuperAdminTest\TourTest.spec.js" time="13.969">
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="4.865763">
+<testsuite name="SuperAdminTest\DriverTest.spec.js" timestamp="2025-11-04T11:52:20.242Z" hostname="chromium" tests="1" failures="1" skipped="0" time="0.001" errors="0">
+<testcase name="TS03 › TC024 - Verify driver is created when user enters valid inputs,verify success toaster message and delete the newly created driver" classname="SuperAdminTest\DriverTest.spec.js" time="0.001">
+<failure message="DriverTest.spec.js:482:6 TC024 - Verify driver is created when user enters valid inputs,verify success toaster message and delete the newly created driver" type="FAILURE">
+<![CDATA[  [chromium] › SuperAdminTest\DriverTest.spec.js:482:6 › TS03 › TC024 - Verify driver is created when user enters valid inputs,verify success toaster message and delete the newly created driver 
+
+    Error: page.waitForTimeout: Target page, context or browser has been closed
+
+       at ..\SuperAdminPages\LoginPage.js:22
+
+      20 |     async LaunchUrl(URL){
+      21 |         await this.page.goto(URL);
+    > 22 |         await this.page.waitForTimeout(1000);
+         |                         ^
+      23 |         await this.LoginButton.click();
+      24 |     };
+      25 |  
+        at LoginPage.LaunchUrl (C:\Users\JV\Desktop\Auto Planner Automation\AutoPlanner\SuperAdminPages\LoginPage.js:22:25)
+        at C:\Users\JV\Desktop\Auto Planner Automation\AutoPlanner\tests\SuperAdminTest\DriverTest.spec.js:28:9
+]]>
+</failure>
 </testcase>
 </testsuite>
 </testsuites>

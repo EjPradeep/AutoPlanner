@@ -50,19 +50,7 @@ export default defineConfig({
       
     },
 
-<<<<<<< Updated upstream
     
-=======
-    //{
-    //  name: 'firefox',
-    //  use: { ...devices['Desktop Firefox'] },
-    //},
-
-    //{
-    //  name: 'webkit',
-    //  use: { ...devices['Desktop Safari'] },
-    //}, 
->>>>>>> Stashed changes
 
     /* Test against mobile viewports. */
     // {
