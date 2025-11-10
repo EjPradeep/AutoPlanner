@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RajiLaks/AutoPlanner.git"
@@ -21,12 +23,8 @@
     "@types/node": "^24.7.2"
   },
   "dependencies": {
-<<<<<<< HEAD
     "xlsx": "^0.18.5",
     "xml2js": "^0.6.2"
-=======
-    "xlsx": "^0.18.5"
->>>>>>> 3e3f1271bd3976ff28379facc8e02ac562b9798f
   },
   "directories": {
     "test": "tests"

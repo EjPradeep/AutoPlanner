@@ -23,7 +23,7 @@ test.describe('TS_006', async()=>{
         const tourmodule = new TourPage(page);
         await tourmodule.navigateToTheTourScreen();
     })
-/*
+
     test('TC002 - Add a new Two Way Tour with valid data.', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
@@ -38,15 +38,20 @@ test.describe('TS_006', async()=>{
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName, Alias, TourMode } = TWTData[1];
         await tourmodule.update_TwoWayTour(TourName, Alias, TourMode);
+        await page.pause();
     })
 
-    test('TC004 - Verify that the application displays the error message when the user without enter the data.', async()=>{
+    test('TC004 - Verify that the application allows the user to delete the added tour.', async()=>{
+        const tourmodule = new TourPage(page);
+        await tourmodule.deleteTWT();
+    })
+
+    test('TC005 - Verify that the application displays the error message when the user without enter the data.', async()=>{
         const tourmodule = new TourPage(page);
         await tourmodule.addTourwithWithoutData();
     })
-        
 
-    test('TC005 - Add a new two way tour without data', async()=>{
+    test('TC006 - Add a new two way tour without data', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
@@ -54,7 +59,7 @@ test.describe('TS_006', async()=>{
         await tourmodule.addNewTourWithInvalidData(TourName, TourMode, TourType, Location);
     })
 
-    test('TC006 - Add a new Disposal Tour with valid data.', async()=>{
+    test('TC007 - Add a new Disposal Tour with valid data.', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
@@ -62,19 +67,34 @@ test.describe('TS_006', async()=>{
         await tourmodule.addDisposalTour(TourName, TourMode);
     })
 
-    test('TC007 - Update disposal tour with valid data.', async()=>{
+    test('TC008 - Update disposal tour with valid data.', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName , TourMode } = TWTData[5];
         await tourmodule.addDisposalTour(TourName, TourMode);
     })
-*/
+
+    test('TC009 - Delete the Disposal tour', async()=>{
+        const tourmodule = new TourPage(page);
+        await tourmodule.deleteDisposalTour();
+    })
+
     test('TC008 - Add a Regular tour with valid data', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount } = TWTData[6];
         await tourmodule.addRegularTour(TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
+    }) 
+/*
+    test('TC010 - Update the regular tour', async()=>{
+        const regularTour = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const regularUpdate = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const {TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount} = regularUpdate[7];
+        await regularTour.updateRegular(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
     })
-})
+*/
+
+});

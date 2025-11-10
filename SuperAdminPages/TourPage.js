@@ -1,6 +1,6 @@
-const { expect } = require ('@playwright/test');
-class TourPage{
-    constructor(page){
+const { expect } = require('@playwright/test');
+class TourPage {
+    constructor(page) {
         this.page = page;
         this.managementIcon = page.locator('//span[@aria-label="Management"]');
         this.tourModule = page.locator('//a[text()="Tour"]');
@@ -31,24 +31,30 @@ class TourPage{
         this.TWT_Toaster = page.locator('//div[text()="Standard tour added successfully"]');
         this.closeIcon = page.locator('//span[@aria-label="Close"]');
         //Update
-        this.menuIcon = page.locator('(//button[@id="basic-button"])[1]');
+        this.menuIcon = page.locator("(//*[@class='menu-bg iconify iconify--eva'])[1]");
         this.updateText = page.locator('(//li[text()="Update"])[1]');
         this.deleteText = page.locator('(//li[text()="Delete"])[1]');
         this.updateReturnTime = page.locator('//button[@aria-label="Choose time, selected time is 7:15 PM"]');
-
+        this.yesButton = page.locator('//div[@class="MuiBox-root css-1iamr9e"]/div');
+        this.noButton = page.locator('//div[@class="MuiBox-root css-1iamr9e"]/button');
+        this.deleteToaster = page.locator("//div[text()='Standard tour deleted successfully']");
         //Disposal
         this.disposalText = page.locator('//button[text()="Disposal / Round Tour"]');
         this.togglebutton = page.locator('//input[@type="checkbox"]');
         this.locationDetails = page.locator('//input[@aria-placeholder="Search"]');
         this.expectedDuration = page.locator('//li[@aria-label="0 minutes"]');
-    
+        
+
         //Regular
         this.regularText = page.locator('//button[text()="Regular Tour"]');
+        this.close = page.locator('span[aria-label="Close"]');
         this.addRegularButton = page.locator('//button[text()="Add Regular"]');
         this.tourNamefield = page.locator('//input[@id="tourName"]');
         this.agentName = page.locator('//input[@id="agentName"]');
         this.pickupSourceName = page.locator('//input[@id="sourceName"]');
         this.sourceLocation = page.locator('//input[@id="source"]');
+        //stae visible
+        this.waitFortable_source = page.locator("(//div[@class='pac-container pac-logo hdpi'])[3]");
         this.destinationName = page.locator('//input[@id="destinationName"]');
         this.destinationLocation = page.locator('//input[@id="destination"]');
         this.startTimeScrollDown = page.locator('(//button[@aria-label="Choose time"])[1]');
@@ -59,16 +65,19 @@ class TourPage{
         this.childCount = page.locator('//input[@name="childCount"]');
         this.driverNameField = page.locator('//input[@placeholder="Driver name"]');
         
+        //Update Regular
+        this.menu = page.locator('(//div[@role="menu"])[1]');
+        this.updatebutton = page.locator('(//li[@role="menuitem"])[1]');
     }
 
 
-    async navigateToTheTourScreen(){
+    async navigateToTheTourScreen() {
         await this.managementIcon.click();
         await this.page.waitForTimeout(1000);
-        await this.tourModule.click();        
+        await this.tourModule.click();
     }
-
-    async addNewTourFor_TWT(TourName, Alias, TourType, TourMode, Location){
+    //Two Way Tour
+    async addNewTourFor_TWT(TourName, Alias, TourType, TourMode, Location) {
         await this.twoWayTourText.click();
         await this.page.waitForTimeout(1000);
         await this.addNewTourButton.click();
@@ -88,7 +97,7 @@ class TourPage{
         await this.page.waitForTimeout(1000);
         await this.tourName.fill(TourName);
         await this.page.waitForTimeout(1000);
-        await this.tourMode.fill(TourMode);                
+        await this.tourMode.fill(TourMode);
         await this.page.waitForTimeout(1000);
         await this.tourMode.press('ArrowDown');
         await this.page.waitForTimeout(1000);
@@ -102,14 +111,14 @@ class TourPage{
         await this.toTime.click();
         await this.toHour.click();
         await this.toMinute.click();
-        await this.AM.click(); 
-        await this.saveButton.scrollIntoViewIfNeeded({force:true});
+        await this.AM.click();
+        await this.saveButton.scrollIntoViewIfNeeded({ force: true });
         await this.page.waitForTimeout(2000);
         await this.returnTime.click();
         await this.returnHour.click();
         await this.returnMinute.click();
         await this.PM.click();
-        await this.page.waitForTimeout(1000); 
+        await this.page.waitForTimeout(1000);
         await this.locationField.fill(Location);
         await this.page.waitForTimeout(2000);
         await this.locationField.press('ArrowDown');
@@ -121,42 +130,63 @@ class TourPage{
         console.log(toaster1);
     }
 
-    async update_TwoWayTour(TourName, Alias, TourMode){
+    async update_TwoWayTour(TourName, Alias, TourMode) {
         await this.menuIcon.hover();
-        await this.menuIcon.click();
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
         await this.page.waitForTimeout(1000);
-        await this.updateText.click({force:true});
+        await this.updateText.click({ force: true });
         await this.tourName.click();
         await this.tourName.clear();
         await this.tourName.fill(TourName);
+        await this.page.waitForTimeout(1000);
         await this.aliases_1.clear();
         await this.aliases_1.fill(Alias);
+        await this.page.waitForTimeout(1000);
         await this.tourMode.click();
-        await this.tourMode.fill(TourMode);
-        await this.tourMode.press('ArrowDown');
-        await this.tourMode.press('Enter');
-        await this.saveButton.scrollIntoViewIfNeeded({force:true});
+        await this.saveButton.scrollIntoViewIfNeeded({ force: true });
         await this.updateReturnTime.click();
+        await this.page.waitForTimeout(1000);
         await this.returnHour.click();
         await this.returnMinute.click();
+
         await this.PM.click();
-        await this.page.waitForTimeout(1000); 
+        await this.page.waitForTimeout(1000);
+        await this.page.pause();
         await this.saveButton.click();
         await this.page.waitForTimeout(2000);
-       // const toaster1 = await this.TWT_Toaster.innerText();
+        // const toaster1 = await this.TWT_Toaster.innerText();
         //console.log(toaster1);
     }
-     
-    async addTourwithWithoutData(){
+
+    async deleteTWT(){
+        await this.menuIcon.hover();
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.deleteText.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.noButton.click();
+        await this.page.waitForTimeout(1000);
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
+        await this.deleteText.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.yesButton.click();
+        await this.page.waitForTimeout(1000);
+        const toasterForDelete = await this.deleteToaster.innerText();
+        console.log(toasterForDelete);
+    }
+
+    async addTourwithWithoutData() {
         await this.addNewTourButton.click();
         await this.saveButton.scrollIntoViewIfNeeded();
         await this.saveButton.click();
         await this.closeIcon.click();
         await this.page.waitForTimeout(1000);
-
     }
 
-    async addNewTourWithInvalidData(TourName, TourMode, TourType, Location){
+    async addNewTourWithInvalidData(TourName, TourMode, TourType, Location) {
         await this.addNewTourButton.click();
         await this.tourName.fill(TourName);
         await this.page.waitForTimeout(1000);
@@ -169,7 +199,7 @@ class TourPage{
         await this.page.waitForTimeout(1000);
         await this.tourName.fill(TourName);
         await this.page.waitForTimeout(1000);
-        await this.tourMode.fill(TourMode);                
+        await this.tourMode.fill(TourMode);
         await this.page.waitForTimeout(1000);
         await this.tourMode.press('ArrowDown');
         await this.page.waitForTimeout(1000);
@@ -183,14 +213,14 @@ class TourPage{
         await this.toTime.click();
         await this.toHour.click();
         await this.toMinute.click();
-        await this.AM.click(); 
-        await this.saveButton.scrollIntoViewIfNeeded({force:true});
+        await this.AM.click();
+        await this.saveButton.scrollIntoViewIfNeeded({ force: true });
         await this.page.waitForTimeout(2000);
         await this.returnTime.click();
         await this.returnHour.click();
         await this.returnMinute.click();
         await this.PM.click();
-        await this.page.waitForTimeout(1000); 
+        await this.page.waitForTimeout(1000);
         await this.locationField.fill(Location);
         await this.page.waitForTimeout(2000);
         await this.locationField.press('ArrowDown');
@@ -198,9 +228,11 @@ class TourPage{
         await this.saveButton.click();
         await this.page.waitForTimeout(1000);
         await this.closeIcon.click();
+        await this.page.waitForTimeout(1000);
     }
     
-    async addDisposalTour(TourName, TourMode){
+    //Disposal/Round Tour
+    async addDisposalTour(TourName, TourMode) {
         await this.disposalText.click();
         await this.addNewTourButton.click();
         await this.togglebutton.click();
@@ -214,15 +246,15 @@ class TourPage{
         await this.from_Hour.click();
         await this.from_Minute.click();
         await this.page.waitForTimeout(2000);
-        await this.saveButton.scrollIntoViewIfNeeded(); 
+        await this.saveButton.scrollIntoViewIfNeeded();
         await this.saveButton.click();
         await this.page.waitForTimeout(1000);
     }
 
-    async updateDisposalTour(TourName, TourMode){
-        await this.menuIcon.click({force:true});
+    async updateDisposalTour(TourName, TourMode) {
+        await this.menuIcon.click({ force: true });
         await this.page.waitForTimeout(1000);
-        await this.updateText.click({force:true});
+        await this.updateText.click({ force: true });
         await this.togglebutton.click();
         await this.tourName.click();
         await this.tourName.fill(TourName);
@@ -231,12 +263,31 @@ class TourPage{
         await this.tourMode.press('ArrowDown');
         await this.tourMode.press('Enter');
         await this.page.waitForTimeout(2000);
-        await this.saveButton.scrollIntoViewIfNeeded(); 
+        await this.saveButton.scrollIntoViewIfNeeded();
         await this.saveButton.click();
         await this.page.waitForTimeout(1000);
     }
 
-    async addRegularTour(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount){
+   async deleteDisposalTour(){
+        await this.menuIcon.hover();
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.deleteText.click({ force: true });
+        await this.page.waitForTimeout(2000);        
+        await this.noButton.click();
+        await this.page.waitForTimeout(1000);
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
+        await this.deleteText.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.yesButton.click();
+        await this.page.waitForTimeout(5000);
+        const toasterForDelete = await this.deleteToaster.innerText();
+        console.log(toasterForDelete);
+   }
+
+   async addRegularTour(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount){
         await this.regularText.click();
         await this.addRegularButton.click();
         await this.tourNamefield.fill(TourName);
@@ -283,6 +334,10 @@ class TourPage{
         await this.driverNameField.press('Enter'); */  
         await this.saveButton.click();
     }
+
+    
+
+
 
 }
 
