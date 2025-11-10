@@ -1,60 +1,10 @@
-<testsuites id="" name="" tests="11" failures="1" skipped="0" errors="0" time="119.498884">
-<testsuite name="SuperAdminTest\TourTest.spec.js" timestamp="2025-11-10T05:16:09.839Z" hostname="chromium" tests="11" failures="1" skipped="0" time="109.398" errors="0">
-<testcase name="TS_006 › TC001 - Navigate to the Tour Module" classname="SuperAdminTest\TourTest.spec.js" time="3.047">
+<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="23.664187">
+<testsuite name="SuperAdminTest\TourTest.spec.js" timestamp="2025-11-10T09:38:23.849Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.145" errors="0">
+<testcase name="TS_006 › TC001 - Navigate to the Tour Module" classname="SuperAdminTest\TourTest.spec.js" time="3.129">
 </testcase>
-<testcase name="TS_006 › TC002 - Add a new Two Way Tour with valid data." classname="SuperAdminTest\TourTest.spec.js" time="26.334">
-<system-out>
-<![CDATA[Standard tour added successfully
-]]>
-</system-out>
+<testcase name="TS_006 › TC010 - Add a new Round Tour with valid data." classname="SuperAdminTest\TourTest.spec.js" time="4.782">
 </testcase>
-<testcase name="TS_006 › TC003 - Update the Two way tour with valid data" classname="SuperAdminTest\TourTest.spec.js" time="14.422">
-</testcase>
-<testcase name="TS_006 › TC004 - Verify that the application allows the user to delete the added tour." classname="SuperAdminTest\TourTest.spec.js" time="7.205">
-<system-out>
-<![CDATA[Standard tour deleted successfully
-]]>
-</system-out>
-</testcase>
-<testcase name="TS_006 › TC005 - Verify that the application displays the error message when the user without enter the data." classname="SuperAdminTest\TourTest.spec.js" time="1.783">
-</testcase>
-<testcase name="TS_006 › TC006 - Add a new two way tour without data" classname="SuperAdminTest\TourTest.spec.js" time="20.537">
-</testcase>
-<testcase name="TS_006 › TC007 - Add a new Disposal Tour with valid data." classname="SuperAdminTest\TourTest.spec.js" time="5.301">
-</testcase>
-<testcase name="TS_006 › TC008 - Update disposal tour with valid data." classname="SuperAdminTest\TourTest.spec.js" time="5.073">
-</testcase>
-<testcase name="TS_006 › TC009 - Delete the Disposal tour" classname="SuperAdminTest\TourTest.spec.js" time="11.069">
-<system-out>
-<![CDATA[Standard tour deleted successfully
-]]>
-</system-out>
-</testcase>
-<testcase name="TS_006 › TC008 - Add a Regular tour with valid data" classname="SuperAdminTest\TourTest.spec.js" time="14.613">
-</testcase>
-<testcase name="TS_006 › TC010 - Update the regular tour" classname="SuperAdminTest\TourTest.spec.js" time="0.014">
-<failure message="TourTest.spec.js:91:5 TC010 - Update the regular tour" type="FAILURE">
-<![CDATA[  [chromium] › SuperAdminTest\TourTest.spec.js:91:5 › TS_006 › TC010 - Update the regular tour ─────
-
-    TypeError: regularTour.updateRegular is not a function
-
-      94 |         const regularUpdate = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
-      95 |         const {TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount} = regularUpdate[7];
-    > 96 |         await regularTour.updateRegular(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
-         |                           ^
-      97 |     })
-      98 |
-      99 |
-        at C:\Users\RajalakshmiRajasekar\Desktop\Autoplanner\AutoPlanner\tests\SuperAdminTest\TourTest.spec.js:96:27
-
-    Error Context: ..\test-results\SuperAdminTest-TourTest-TS-f7018-0---Update-the-regular-tour-chromium\error-context.md
-]]>
-</failure>
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\test-results\SuperAdminTest-TourTest-TS-f7018-0---Update-the-regular-tour-chromium\error-context.md]]
-]]>
-</system-out>
+<testcase name="TS_006 › TC011 - Update the disposal tour with valid data." classname="SuperAdminTest\TourTest.spec.js" time="6.234">
 </testcase>
 </testsuite>
 </testsuites>

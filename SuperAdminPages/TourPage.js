@@ -43,7 +43,7 @@ class TourPage {
         this.togglebutton = page.locator('//input[@type="checkbox"]');
         this.locationDetails = page.locator('//input[@aria-placeholder="Search"]');
         this.expectedDuration = page.locator('//li[@aria-label="0 minutes"]');
-        
+        this.expecteduration1 = page.locator('(//input[@placeholder="hh:mm"])[1]');
 
         //Regular
         this.regularText = page.locator('//button[text()="Regular Tour"]');
@@ -132,8 +132,9 @@ class TourPage {
 
     async update_TwoWayTour(TourName, Alias, TourMode) {
         await this.menuIcon.hover();
-        await this.menuIcon.click({ force: true });
-        await this.menuIcon.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        //await this.menuIcon.click({ force: true });
+        await this.menuIcon.dblclick({ force: true });
         await this.page.waitForTimeout(1000);
         await this.updateText.click({ force: true });
         await this.tourName.click();
@@ -149,10 +150,8 @@ class TourPage {
         await this.page.waitForTimeout(1000);
         await this.returnHour.click();
         await this.returnMinute.click();
-
         await this.PM.click();
-        await this.page.waitForTimeout(1000);
-        await this.page.pause();
+        await this.page.waitForTimeout(2000);
         await this.saveButton.click();
         await this.page.waitForTimeout(2000);
         // const toaster1 = await this.TWT_Toaster.innerText();
@@ -231,8 +230,8 @@ class TourPage {
         await this.page.waitForTimeout(1000);
     }
     
-    //Disposal/Round Tour
-    async addDisposalTour(TourName, TourMode) {
+    //Round Tour
+    async addRoundTour(TourName, TourMode) {
         await this.disposalText.click();
         await this.addNewTourButton.click();
         await this.togglebutton.click();
@@ -251,7 +250,7 @@ class TourPage {
         await this.page.waitForTimeout(1000);
     }
 
-    async updateDisposalTour(TourName, TourMode) {
+    async updateRoundTour(TourName, TourMode) {
         await this.menuIcon.click({ force: true });
         await this.page.waitForTimeout(1000);
         await this.updateText.click({ force: true });
@@ -268,7 +267,7 @@ class TourPage {
         await this.page.waitForTimeout(1000);
     }
 
-   async deleteDisposalTour(){
+   async deleteRoundTour(){
         await this.menuIcon.hover();
         await this.menuIcon.click({ force: true });
         await this.menuIcon.click({ force: true });
@@ -286,6 +285,38 @@ class TourPage {
         const toasterForDelete = await this.deleteToaster.innerText();
         console.log(toasterForDelete);
    }
+
+   async addDisposalTour(TourMode){
+        await this.disposalText.click();
+        await this.addNewTourButton.click();
+        await this.tourMode.click();
+        await this.page.waitForTimeout(1000);
+        await this.tourMode.fill(TourMode);
+        await this.tourMode.press('ArrowDown');
+        await this.tourMode.press('Enter');
+        await this.page.waitForTimeout(1000);
+        await this.expecteduration1.fill('05:00');
+        await this.page.waitForTimeout(1000);
+        await this.saveButton.scrollIntoViewIfNeeded();
+        await this.saveButton.click();
+   }
+
+   async updateDisposal(){
+        await this.menuIcon.hover();
+        await this.menuIcon.click({ force: true });
+        await this.menuIcon.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.updateText.click({ force: true });
+        await this.page.waitForTimeout(1000);
+        await this.expecteduration1.clear();
+        await this.page.waitForTimeout(1000);
+        await this.expecteduration1.fill('07:30');
+        await this.page.waitForTimeout(1000);
+        await this.saveButton.scrollIntoViewIfNeeded();
+        await this.saveButton.click();
+   }
+
+
 
    async addRegularTour(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount){
         await this.regularText.click();

@@ -38,7 +38,7 @@ test.describe('TS_006', async()=>{
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName, Alias, TourMode } = TWTData[1];
         await tourmodule.update_TwoWayTour(TourName, Alias, TourMode);
-        await page.pause();
+        
     })
 
     test('TC004 - Verify that the application allows the user to delete the added tour.', async()=>{
@@ -64,7 +64,7 @@ test.describe('TS_006', async()=>{
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName , TourMode } = TWTData[4];
-        await tourmodule.addDisposalTour(TourName, TourMode);
+        await tourmodule.addRoundTour(TourName, TourMode);
     })
 
     test('TC008 - Update disposal tour with valid data.', async()=>{
@@ -72,29 +72,42 @@ test.describe('TS_006', async()=>{
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName , TourMode } = TWTData[5];
-        await tourmodule.addDisposalTour(TourName, TourMode);
+        await tourmodule.updateRoundTour(TourName, TourMode);
     })
 
     test('TC009 - Delete the Disposal tour', async()=>{
         const tourmodule = new TourPage(page);
-        await tourmodule.deleteDisposalTour();
+        await tourmodule.deleteRoundTour();
     })
 
-    test('TC008 - Add a Regular tour with valid data', async()=>{
+    test('TC010 - Add a new Round Tour with valid data.', async()=>{
+        const tourmodule = new TourPage(page);
+        const excelreader = new ExcelReader();
+        const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
+        const { TourMode } = TWTData[8];
+        await tourmodule.addDisposalTour(TourMode);
+    })
+
+    test('TC011 - Update the disposal tour with valid data.', async()=>{
+        const roundtour = new TourPage(page);
+        await roundtour.updateDisposal();
+    })
+
+    test('TC012 - Add a Regular tour with valid data', async()=>{
         const tourmodule = new TourPage(page);
         const excelreader = new ExcelReader();
         const TWTData = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const { TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount } = TWTData[6];
         await tourmodule.addRegularTour(TourName , AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
     }) 
-/*
-    test('TC010 - Update the regular tour', async()=>{
+
+    test('TC013 - Update the regular tour', async()=>{
         const regularTour = new TourPage(page);
         const excelreader = new ExcelReader();
         const regularUpdate = await excelreader.readExcel('C:/Users/RajalakshmiRajasekar/Desktop/Dataset For Autoplanner.xlsx', 'Tour');
         const {TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount} = regularUpdate[7];
         await regularTour.updateRegular(TourName, AgentName, PickupSourceName, PickupLocation, DestinationName, DropLocation, AdultCount, ChildCount);
     })
-*/
+
 
 });
