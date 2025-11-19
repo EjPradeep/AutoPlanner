@@ -165,7 +165,6 @@ class ReportsPage{
 
     async viewTourDetails(){
         await this.viewIcon.click();
-        await this.page.pause();
         await this.page.waitForTimeout(3000);
         const printTourDetails = await this.tourDetails.innerText();
         console.log(printTourDetails);
